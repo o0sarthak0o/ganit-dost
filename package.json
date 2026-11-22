@@ -1,0 +1,16 @@
+{
+  "name": "ganit-dost",
+  "version": "0.1.0",
+  "description": "Voice-first Hindi math tutor for kids: finds the missing basic behind a stuck problem using a prerequisite knowledge graph.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

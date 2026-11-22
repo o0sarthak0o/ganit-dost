@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f6b5f" />
+  <title>गणित दोस्त — Ganit Dost</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230f6b5f'/%3E%3Cpath d='M32 18v28M18 32h28' stroke='%23ffc94d' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">+</span>
+      <div>
+        <div class="brand-name">गणित दोस्त</div>
+        <div class="brand-sub">Ganit Dost</div>
+      </div>
+    </div>
+    <button id="endBtn" class="btn btn-ghost" hidden>बातचीत खत्म करें</button>
+  </header>
+
+  <!-- 1. Start -->
+  <main id="startView" class="view start">
+    <div class="hero-badge" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="56" fill="#ffe7a8"/>
+        <circle cx="60" cy="60" r="44" fill="#0f6b5f"/>
+        <circle cx="45" cy="54" r="5" fill="#fff"/><circle cx="75" cy="54" r="5" fill="#fff"/>
+        <path d="M44 72 q16 14 32 0" stroke="#ffc94d" stroke-width="6" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>गणित में कहीं अटक गए?</h1>
+    <p class="lead">मुझसे हिंदी में बात कीजिए। हम साथ मिलकर देखेंगे कि कौन-सी बात समझनी है, एक-एक कदम करके।</p>
+    <button id="startBtn" class="btn btn-primary btn-big">
+      <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 1 2 0A8 8 0 0 1 13 19.4V22h-2v-2.6A8 8 0 0 1 4 11.5a1 1 0 1 1 2 0 6 6 0 0 0 12 0Z"/></svg> बात शुरू करें
+    </button>
+    <p class="fine">कोई लॉग-इन नहीं। बातचीत कहीं सेव नहीं होती।</p>
+    <p class="fine"><a href="/graph.html">टॉपिक का नक्शा देखें (Knowledge graph)</a></p>
+  </main>
+
+  <!-- 2. Chat -->
+  <main id="chatView" class="view chat" hidden>
+    <section class="ladder" aria-label="आज की सीढ़ी">
+      <span class="ladder-label">आज की सीढ़ी</span>
+      <ol id="ladder"></ol>
+    </section>
+
+    <section id="messages" class="messages" aria-live="polite"></section>
+
+    <section class="dock">
+      <div id="status" class="status" role="status"></div>
+      <div id="voiceNote" class="note" hidden></div>
+      <button id="micBtn" class="mic" aria-label="दबाकर बोलिए">
+        <span class="mic-ring"></span>
+        <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 1 0-7 0v6A3.5 3.5 0 0 0 12 15Zm6-3.5a1 1 0 1 1 2 0A8 8 0 0 1 13 19.4V22h-2v-2.6A8 8 0 0 1 4 11.5a1 1 0 1 1 2 0 6 6 0 0 0 12 0Z"/></svg>
+      </button>
+      <div id="micLabel" class="mic-label">दबाकर बोलिए</div>
+      <form id="textForm" class="text-row" autocomplete="off">
+        <input id="textInput" type="text" maxlength="500" placeholder="या यहाँ लिखकर भेजिए…" aria-label="अपना जवाब लिखिए" />
+        <button class="btn btn-primary" type="submit">भेजें</button>
+      </form>
+      <label class="teacher-toggle"><input id="teacherToggle" type="checkbox" /> शिक्षक व्यू (ग्रेड दिखाएँ)</label>
+    </section>
+  </main>
+
+  <!-- 3. End -->
+  <main id="endView" class="view end" hidden>
+    <h1>आज की मेहनत के लिए शाबाश!</h1>
+    <p class="lead" id="endLine"></p>
+    <div id="masteredBox" class="mastered" hidden>
+      <h2>आज आपने ये बातें पक्की कीं</h2>
+      <ul id="masteredList"></ul>
+    </div>
+    <button id="restartBtn" class="btn btn-primary btn-big">नई बातचीत शुरू करें</button>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,958 @@
+{
+ "subject": "math",
+ "description": "Math topics for school students. Each topic lists its prerequisites (topics one step lower on the tree). The first prerequisite is the most common gap. 'checks' are short diagnostic questions; 'focus' names the prerequisite a wrong answer most likely points to.",
+ "nodes": [
+  {
+   "id": "numbers",
+   "level": 0,
+   "name_en": "Numbers",
+   "name_hi": "संख्याएँ",
+   "prerequisites": [],
+   "keywords": [
+    "संख्या",
+    "गिनती",
+    "गिनना",
+    "अंक",
+    "number",
+    "counting",
+    "बड़ी संख्या",
+    "छोटी संख्या"
+   ],
+   "explain_hi": "संख्याएँ हमें गिनने में मदद करती हैं, जैसे 1, 2, 3। अगर आपके पास 3 आम हैं और 1 आम और मिल जाए, तो 4 आम हो जाते हैं।",
+   "explain_en": "Numbers help us count, like 1, 2, 3. If you have 3 mangoes and get 1 more, you have 4.",
+   "checks": [
+    {
+     "q_hi": "7 के बाद कौन-सी संख्या आती है?",
+     "q_en": "Which number comes after 7?",
+     "answer": "8",
+     "type": "number",
+     "hint_hi": "उँगलियों पर 7 तक गिनिए, फिर एक और उँगली खोलिए।"
+    },
+    {
+     "q_hi": "15 और 12 में कौन-सी संख्या बड़ी है?",
+     "q_en": "Which is bigger, 15 or 12?",
+     "answer": "15",
+     "type": "number",
+     "hint_hi": "दोनों में पहले दहाई का अंक 1 है, अब इकाई के अंक 5 और 2 की तुलना कीजिए।"
+    }
+   ]
+  },
+  {
+   "id": "place_value",
+   "level": 1,
+   "name_en": "Place value",
+   "name_hi": "स्थानीय मान",
+   "prerequisites": [
+    "numbers"
+   ],
+   "keywords": [
+    "स्थानीय मान",
+    "इकाई",
+    "दहाई",
+    "सैकड़ा",
+    "सैकड़े",
+    "हज़ार",
+    "place value",
+    "ones",
+    "tens",
+    "hundreds"
+   ],
+   "explain_hi": "किसी अंक का मान उसकी जगह पर निर्भर करता है। 352 में 3 सैकड़े की जगह पर है, इसलिए उसका मान 300 है। 5 का मान 50 है और 2 का मान 2 है।",
+   "explain_en": "A digit's value depends on its place. In 352, the 3 is worth 300, the 5 is worth 50 and the 2 is worth 2.",
+   "checks": [
+    {
+     "q_hi": "47 में 4 का स्थानीय मान क्या है?",
+     "q_en": "What is the place value of 4 in 47?",
+     "answer": "40",
+     "type": "number",
+     "hint_hi": "4 दहाई की जगह पर है। 4 दहाई मतलब 4 बार 10।",
+     "focus": "numbers"
+    },
+    {
+     "q_hi": "325 में 2 का स्थानीय मान क्या है?",
+     "q_en": "What is the place value of 2 in 325?",
+     "answer": "20",
+     "type": "number",
+     "hint_hi": "दाईं ओर से दूसरी जगह दहाई की होती है।",
+     "focus": "numbers"
+    }
+   ]
+  },
+  {
+   "id": "addition",
+   "level": 1,
+   "name_en": "Addition",
+   "name_hi": "जोड़",
+   "prerequisites": [
+    "numbers"
+   ],
+   "keywords": [
+    "जोड़",
+    "जोड़ना",
+    "जोड़ो",
+    "प्लस",
+    "योग",
+    "plus",
+    "add",
+    "addition",
+    "sum",
+    "+"
+   ],
+   "explain_hi": "जोड़ने का मतलब है चीज़ों को इकट्ठा करना। 5 टॉफ़ी में 3 टॉफ़ी और मिलाएँ, तो 8 टॉफ़ी हो जाती हैं।",
+   "explain_en": "Adding means putting things together. 5 toffees and 3 more toffees make 8.",
+   "checks": [
+    {
+     "q_hi": "6 + 7 कितना होता है?",
+     "q_en": "What is 6 + 7?",
+     "answer": "13",
+     "type": "number",
+     "hint_hi": "6 से आगे 7 कदम गिनिए: 7, 8, 9, 10, 11, 12, 13...",
+     "focus": "numbers"
+    },
+    {
+     "q_hi": "25 + 14 कितना होता है?",
+     "q_en": "What is 25 + 14?",
+     "answer": "39",
+     "type": "number",
+     "hint_hi": "पहले दहाई जोड़िए: 20 + 10, फिर इकाई: 5 + 4।",
+     "focus": "numbers"
+    }
+   ]
+  },
+  {
+   "id": "subtraction",
+   "level": 1,
+   "name_en": "Subtraction",
+   "name_hi": "घटाना",
+   "prerequisites": [
+    "addition",
+    "numbers"
+   ],
+   "keywords": [
+    "घटा",
+    "घटाना",
+    "घटाओ",
+    "माइनस",
+    "अंतर",
+    "बचे",
+    "minus",
+    "subtract",
+    "subtraction",
+    "difference"
+   ],
+   "explain_hi": "घटाने का मतलब है कुछ चीज़ें हटा देना। 9 केलों में से 4 खा लिए, तो 5 केले बचे।",
+   "explain_en": "Subtracting means taking some away. From 9 bananas, eat 4, and 5 are left.",
+   "checks": [
+    {
+     "q_hi": "15 − 6 कितना होता है?",
+     "q_en": "What is 15 − 6?",
+     "answer": "9",
+     "type": "number",
+     "hint_hi": "सोचिए, 6 में कितना जोड़ें कि 15 हो जाए?",
+     "focus": "addition"
+    },
+    {
+     "q_hi": "50 − 23 कितना होता है?",
+     "q_en": "What is 50 − 23?",
+     "answer": "27",
+     "type": "number",
+     "hint_hi": "पहले 50 में से 20 घटाइए, फिर 3 और घटाइए।",
+     "focus": "addition"
+    }
+   ]
+  },
+  {
+   "id": "multiplication",
+   "level": 2,
+   "name_en": "Multiplication",
+   "name_hi": "गुणा",
+   "prerequisites": [
+    "addition"
+   ],
+   "keywords": [
+    "गुणा",
+    "गुणन",
+    "पहाड़ा",
+    "टेबल",
+    "times",
+    "multiply",
+    "multiplication",
+    "table",
+    "×",
+    "*"
+   ],
+   "explain_hi": "गुणा बार-बार जोड़ने का छोटा तरीका है। 4 × 3 का मतलब है 4 को 3 बार जोड़ना: 4 + 4 + 4 = 12।",
+   "explain_en": "Multiplication is quick repeated adding. 4 × 3 means 4 + 4 + 4 = 12.",
+   "checks": [
+    {
+     "q_hi": "6 × 4 कितना होता है?",
+     "q_en": "What is 6 × 4?",
+     "answer": "24",
+     "type": "number",
+     "hint_hi": "6 को 4 बार जोड़िए: 6 + 6 + 6 + 6।",
+     "focus": "addition"
+    },
+    {
+     "q_hi": "7 × 8 कितना होता है?",
+     "q_en": "What is 7 × 8?",
+     "answer": "56",
+     "type": "number",
+     "hint_hi": "7 × 7 = 49 होता है। उसमें एक 7 और जोड़िए।",
+     "focus": "addition"
+    }
+   ]
+  },
+  {
+   "id": "division",
+   "level": 2,
+   "name_en": "Division",
+   "name_hi": "भाग",
+   "prerequisites": [
+    "multiplication",
+    "subtraction"
+   ],
+   "keywords": [
+    "भाग",
+    "बाँट",
+    "बांट",
+    "बाँटना",
+    "भागफल",
+    "शेषफल",
+    "भाजक",
+    "divide",
+    "division",
+    "share",
+    "÷"
+   ],
+   "explain_hi": "भाग का मतलब है बराबर-बराबर बाँटना। 12 लड्डू 3 बच्चों में बराबर बाँटें, तो हर बच्चे को 4 लड्डू मिलेंगे। यानी 12 ÷ 3 = 4।",
+   "explain_en": "Division means sharing equally. 12 laddoos shared by 3 children gives 4 each: 12 ÷ 3 = 4.",
+   "checks": [
+    {
+     "q_hi": "20 ÷ 5 कितना होता है?",
+     "q_en": "What is 20 ÷ 5?",
+     "answer": "4",
+     "type": "number",
+     "hint_hi": "5 का पहाड़ा बोलिए: 5, 10, 15, 20... कितनी बार में 20 आया?",
+     "focus": "multiplication"
+    },
+    {
+     "q_hi": "36 ÷ 6 कितना होता है?",
+     "q_en": "What is 36 ÷ 6?",
+     "answer": "6",
+     "type": "number",
+     "hint_hi": "6 को किससे गुणा करें कि 36 बने?",
+     "focus": "multiplication"
+    }
+   ]
+  },
+  {
+   "id": "factors_multiples",
+   "level": 3,
+   "name_en": "Factors and multiples",
+   "name_hi": "गुणनखंड और गुणज",
+   "prerequisites": [
+    "division",
+    "multiplication"
+   ],
+   "keywords": [
+    "गुणनखंड",
+    "गुणज",
+    "अभाज्य",
+    "भाज्य",
+    "factor",
+    "factors",
+    "multiple",
+    "multiples",
+    "prime"
+   ],
+   "explain_hi": "जो संख्याएँ किसी संख्या को पूरा-पूरा भाग देती हैं, वे उसके गुणनखंड हैं। 12 के गुणनखंड हैं 1, 2, 3, 4, 6 और 12। और 3 के गुणज हैं 3, 6, 9, 12, यानी 3 का पहाड़ा।",
+   "explain_en": "Factors divide a number exactly: factors of 12 are 1, 2, 3, 4, 6, 12. Multiples of 3 are its table: 3, 6, 9, 12.",
+   "checks": [
+    {
+     "q_hi": "क्या 5, 20 का गुणनखंड है? हाँ या नहीं?",
+     "q_en": "Is 5 a factor of 20? Yes or no?",
+     "answer": "yes",
+     "type": "yesno",
+     "hint_hi": "देखिए, क्या 20 को 5 से पूरा-पूरा बाँट सकते हैं?",
+     "focus": "division"
+    },
+    {
+     "q_hi": "3 का पाँचवाँ गुणज क्या है?",
+     "q_en": "What is the fifth multiple of 3?",
+     "answer": "15",
+     "type": "number",
+     "hint_hi": "3 का पहाड़ा पाँच तक बोलिए।",
+     "focus": "multiplication"
+    }
+   ]
+  },
+  {
+   "id": "lcm_hcf",
+   "level": 4,
+   "name_en": "LCM and HCF",
+   "name_hi": "LCM और HCF",
+   "prerequisites": [
+    "factors_multiples"
+   ],
+   "keywords": [
+    "lcm",
+    "hcf",
+    "gcd",
+    "लघुत्तम",
+    "महत्तम",
+    "ल.स.",
+    "म.स.",
+    "एल सी एम",
+    "एच सी एफ"
+   ],
+   "explain_hi": "LCM वह सबसे छोटी संख्या है जो दोनों संख्याओं से पूरी-पूरी बँट जाए। 4 और 6 का LCM 12 है। HCF वह सबसे बड़ी संख्या है जो दोनों को पूरा-पूरा बाँट दे। 4 और 6 का HCF 2 है।",
+   "explain_en": "LCM is the smallest number both divide into (LCM of 4 and 6 is 12). HCF is the biggest number dividing both (HCF of 4 and 6 is 2).",
+   "checks": [
+    {
+     "q_hi": "2 और 3 का LCM क्या है?",
+     "q_en": "What is the LCM of 2 and 3?",
+     "answer": "6",
+     "type": "number",
+     "hint_hi": "2 के गुणज: 2, 4, 6... और 3 के गुणज: 3, 6... पहला एक जैसा कौन-सा है?",
+     "focus": "factors_multiples"
+    },
+    {
+     "q_hi": "12 और 18 का HCF क्या है?",
+     "q_en": "What is the HCF of 12 and 18?",
+     "answer": "6",
+     "type": "number",
+     "hint_hi": "वह सबसे बड़ी संख्या ढूँढिए जो 12 और 18 दोनों को पूरा बाँटे।",
+     "focus": "factors_multiples"
+    }
+   ]
+  },
+  {
+   "id": "order_of_operations",
+   "level": 3,
+   "name_en": "Order of operations (BODMAS)",
+   "name_hi": "क्रियाओं का क्रम (BODMAS)",
+   "prerequisites": [
+    "multiplication",
+    "division",
+    "addition",
+    "subtraction"
+   ],
+   "keywords": [
+    "bodmas",
+    "bidmas",
+    "pemdas",
+    "कोष्ठक",
+    "bracket",
+    "brackets",
+    "क्रम",
+    "सरल करो",
+    "सरल कीजिए",
+    "simplify"
+   ],
+   "explain_hi": "जब एक सवाल में कई क्रियाएँ हों, तो पहले कोष्ठक, फिर भाग और गुणा, और आख़िर में जोड़ और घटाना करते हैं। इसे BODMAS कहते हैं। जैसे 2 + 3 × 4 = 2 + 12 = 14।",
+   "explain_en": "With many operations: brackets first, then divide and multiply, then add and subtract (BODMAS). 2 + 3 × 4 = 14.",
+   "checks": [
+    {
+     "q_hi": "5 + 2 × 3 कितना होता है?",
+     "q_en": "What is 5 + 2 × 3?",
+     "answer": "11",
+     "type": "number",
+     "hint_hi": "पहले गुणा कीजिए: 2 × 3, फिर उसमें 5 जोड़िए।",
+     "focus": "multiplication"
+    },
+    {
+     "q_hi": "(4 + 2) × 3 कितना होता है?",
+     "q_en": "What is (4 + 2) × 3?",
+     "answer": "18",
+     "type": "number",
+     "hint_hi": "पहले कोष्ठक के अंदर का जोड़ कीजिए।",
+     "focus": "addition"
+    }
+   ]
+  },
+  {
+   "id": "integers",
+   "level": 3,
+   "name_en": "Integers (negative numbers)",
+   "name_hi": "पूर्णांक (ऋण संख्याएँ)",
+   "prerequisites": [
+    "subtraction"
+   ],
+   "keywords": [
+    "पूर्णांक",
+    "ऋण",
+    "ऋणात्मक",
+    "धनात्मक",
+    "negative",
+    "integer",
+    "integers",
+    "माइनस वाली"
+   ],
+   "explain_hi": "शून्य से छोटी संख्याओं को ऋण संख्याएँ कहते हैं, जैसे −1, −2, −3। संख्या रेखा पर ये 0 के बाईं ओर होती हैं। अगर ठंड में तापमान 0 से 3 डिग्री नीचे हो, तो उसे −3 लिखते हैं।",
+   "explain_en": "Numbers below zero are negative: −1, −2, −3. They sit left of 0 on the number line.",
+   "checks": [
+    {
+     "q_hi": "−3 + 5 कितना होता है?",
+     "q_en": "What is −3 + 5?",
+     "answer": "2",
+     "type": "number",
+     "hint_hi": "संख्या रेखा पर −3 से शुरू करके 5 कदम दाईं ओर चलिए।",
+     "focus": "subtraction"
+    },
+    {
+     "q_hi": "2 − 5 कितना होता है?",
+     "q_en": "What is 2 − 5?",
+     "answer": "-3",
+     "type": "number",
+     "hint_hi": "2 से शुरू करके 5 कदम बाईं ओर चलिए। 0 के बाद भी चलते रहिए।",
+     "focus": "subtraction"
+    }
+   ]
+  },
+  {
+   "id": "fractions",
+   "level": 3,
+   "name_en": "Fractions",
+   "name_hi": "भिन्न",
+   "prerequisites": [
+    "division",
+    "multiplication"
+   ],
+   "keywords": [
+    "भिन्न",
+    "अंश",
+    "हर",
+    "आधा",
+    "चौथाई",
+    "तिहाई",
+    "बटा",
+    "fraction",
+    "fractions",
+    "numerator",
+    "denominator",
+    "half",
+    "quarter"
+   ],
+   "explain_hi": "भिन्न किसी पूरी चीज़ का एक हिस्सा बताती है। एक रोटी के 4 बराबर टुकड़े करें और 1 टुकड़ा लें, तो वह 1/4 रोटी है। ऊपर की संख्या अंश है, नीचे की संख्या हर है।",
+   "explain_en": "A fraction is a part of a whole. Cut a roti into 4 equal pieces and take 1: that is 1/4.",
+   "checks": [
+    {
+     "q_hi": "8 का आधा कितना होता है?",
+     "q_en": "What is half of 8?",
+     "answer": "4",
+     "type": "number",
+     "hint_hi": "8 चीज़ों को 2 लोगों में बराबर बाँटिए।",
+     "focus": "division"
+    },
+    {
+     "q_hi": "1/2 और 1/4 में कौन-सी भिन्न बड़ी है?",
+     "q_en": "Which is bigger, 1/2 or 1/4?",
+     "answer": "1/2",
+     "type": "fraction",
+     "hint_hi": "आधी रोटी बड़ी है या रोटी का चौथा हिस्सा?",
+     "focus": "division"
+    }
+   ]
+  },
+  {
+   "id": "fraction_operations",
+   "level": 5,
+   "name_en": "Adding and subtracting fractions",
+   "name_hi": "भिन्नों का जोड़-घटाव",
+   "prerequisites": [
+    "fractions",
+    "lcm_hcf",
+    "addition"
+   ],
+   "keywords": [
+    "भिन्नों को जोड़",
+    "भिन्न जोड़",
+    "भिन्नों का जोड़",
+    "भिन्नों का घटाव",
+    "add fractions",
+    "subtract fractions",
+    "समान हर",
+    "like fractions"
+   ],
+   "patterns": [
+    "\\d+\\s*/\\s*\\d+\\s*[+\\-]\\s*\\d+\\s*/\\s*\\d+"
+   ],
+   "explain_hi": "भिन्नों को जोड़ने के लिए हर, यानी नीचे की संख्या, एक जैसा होना चाहिए। फिर सिर्फ़ ऊपर की संख्याएँ जोड़ते हैं: 1/4 + 2/4 = 3/4। अगर हर अलग हों, तो पहले LCM से हर एक जैसा बनाते हैं।",
+   "explain_en": "To add fractions the denominators must match; then add the tops: 1/4 + 2/4 = 3/4. If they differ, use the LCM first.",
+   "checks": [
+    {
+     "q_hi": "1/5 + 2/5 कितना होता है?",
+     "q_en": "What is 1/5 + 2/5?",
+     "answer": "3/5",
+     "type": "fraction",
+     "hint_hi": "हर दोनों में 5 है। अब सिर्फ़ ऊपर वाली संख्याएँ जोड़िए।",
+     "focus": "fractions"
+    },
+    {
+     "q_hi": "1/2 + 1/4 कितना होता है?",
+     "q_en": "What is 1/2 + 1/4?",
+     "answer": "3/4",
+     "type": "fraction",
+     "hint_hi": "1/2 को 2/4 लिख सकते हैं। अब दोनों का हर 4 है।",
+     "focus": "lcm_hcf"
+    }
+   ]
+  },
+  {
+   "id": "decimals",
+   "level": 4,
+   "name_en": "Decimals",
+   "name_hi": "दशमलव",
+   "prerequisites": [
+    "fractions",
+    "place_value"
+   ],
+   "keywords": [
+    "दशमलव",
+    "डेसिमल",
+    "पॉइंट",
+    "decimal",
+    "decimals",
+    "point"
+   ],
+   "explain_hi": "दशमलव भी पूरी चीज़ का हिस्सा बताता है। 0.5 का मतलब है 5/10, यानी आधा। 2.5 रुपये मतलब ढाई रुपये।",
+   "explain_en": "Decimals also show parts: 0.5 means 5/10, which is a half. 2.5 rupees is two and a half rupees.",
+   "checks": [
+    {
+     "q_hi": "0.5 + 0.5 कितना होता है?",
+     "q_en": "What is 0.5 + 0.5?",
+     "answer": "1",
+     "type": "number",
+     "hint_hi": "आधा और आधा मिलाकर कितना होता है?",
+     "focus": "fractions"
+    },
+    {
+     "q_hi": "1.2 + 0.3 कितना होता है?",
+     "q_en": "What is 1.2 + 0.3?",
+     "answer": "1.5",
+     "type": "number",
+     "hint_hi": "दशमलव के बाद वाले अंक जोड़िए: 2 + 3।",
+     "focus": "place_value"
+    }
+   ]
+  },
+  {
+   "id": "percentage",
+   "level": 5,
+   "name_en": "Percentage",
+   "name_hi": "प्रतिशत",
+   "prerequisites": [
+    "fractions",
+    "decimals",
+    "multiplication"
+   ],
+   "keywords": [
+    "प्रतिशत",
+    "फ़ीसदी",
+    "फीसदी",
+    "परसेंट",
+    "percent",
+    "percentage",
+    "%"
+   ],
+   "explain_hi": "प्रतिशत का मतलब है ‘हर 100 में से’। 50% का मतलब है 100 में से 50, यानी आधा। 10% का मतलब है 100 में से 10।",
+   "explain_en": "Percent means 'out of every 100'. 50% is half; 10% is 10 out of 100.",
+   "checks": [
+    {
+     "q_hi": "200 का 50% कितना होता है?",
+     "q_en": "What is 50% of 200?",
+     "answer": "100",
+     "type": "number",
+     "hint_hi": "50% यानी आधा। 200 का आधा कितना?",
+     "focus": "fractions"
+    },
+    {
+     "q_hi": "100 का 10% कितना होता है?",
+     "q_en": "What is 10% of 100?",
+     "answer": "10",
+     "type": "number",
+     "hint_hi": "100 में से 10।",
+     "focus": "fractions"
+    }
+   ]
+  },
+  {
+   "id": "ratio_proportion",
+   "level": 4,
+   "name_en": "Ratio and proportion",
+   "name_hi": "अनुपात और समानुपात",
+   "prerequisites": [
+    "fractions",
+    "division",
+    "multiplication"
+   ],
+   "keywords": [
+    "अनुपात",
+    "समानुपात",
+    "ratio",
+    "proportion",
+    "ऐकिक",
+    "unitary"
+   ],
+   "patterns": [
+    "\\d+\\s*:\\s*\\d+"
+   ],
+   "explain_hi": "अनुपात दो चीज़ों की तुलना करता है। अगर 2 लड़के और 3 लड़कियाँ हैं, तो लड़कों और लड़कियों का अनुपात 2:3 है।",
+   "explain_en": "A ratio compares two amounts. 2 boys and 3 girls gives a ratio of 2:3.",
+   "checks": [
+    {
+     "q_hi": "अगर 1 पेन 5 रुपये का है, तो 3 पेन कितने रुपये के होंगे?",
+     "q_en": "If 1 pen costs 5 rupees, how much do 3 pens cost?",
+     "answer": "15",
+     "type": "number",
+     "hint_hi": "5 रुपये, 3 बार।",
+     "focus": "multiplication"
+    },
+    {
+     "q_hi": "6:3 को सबसे छोटे रूप में लिखिए।",
+     "q_en": "Write 6:3 in simplest form.",
+     "answer": "2:1",
+     "type": "ratio",
+     "hint_hi": "दोनों संख्याओं को 3 से भाग दीजिए।",
+     "focus": "division"
+    }
+   ]
+  },
+  {
+   "id": "exponents",
+   "level": 3,
+   "name_en": "Exponents and powers",
+   "name_hi": "घात और घातांक",
+   "prerequisites": [
+    "multiplication"
+   ],
+   "keywords": [
+    "घात",
+    "घातांक",
+    "घन",
+    "power",
+    "powers",
+    "exponent",
+    "square",
+    "cube",
+    "^",
+    "²",
+    "³",
+    "का वर्ग",
+    "का घन"
+   ],
+   "explain_hi": "घात बार-बार गुणा करने का छोटा तरीका है। 2³ का मतलब है 2 × 2 × 2 = 8। 3² को ‘3 का वर्ग’ कहते हैं, जो 3 × 3 = 9 है।",
+   "explain_en": "A power is repeated multiplication: 2³ = 2 × 2 × 2 = 8. 3² (3 squared) = 9.",
+   "checks": [
+    {
+     "q_hi": "3² यानी 3 का वर्ग कितना होता है?",
+     "q_en": "What is 3²?",
+     "answer": "9",
+     "type": "number",
+     "hint_hi": "3 को 3 से गुणा कीजिए।",
+     "focus": "multiplication"
+    },
+    {
+     "q_hi": "2⁴ कितना होता है?",
+     "q_en": "What is 2⁴?",
+     "answer": "16",
+     "type": "number",
+     "hint_hi": "2 × 2 × 2 × 2, एक-एक करके गुणा कीजिए।",
+     "focus": "multiplication"
+    }
+   ]
+  },
+  {
+   "id": "variables",
+   "level": 3,
+   "name_en": "Variables (letters for numbers)",
+   "name_hi": "चर (अक्षर वाली संख्याएँ)",
+   "prerequisites": [
+    "addition",
+    "multiplication",
+    "subtraction"
+   ],
+   "keywords": [
+    "चर",
+    "variable",
+    "variables",
+    "अक्षर",
+    "letter",
+    "x का मतलब",
+    "x क्या है"
+   ],
+   "explain_hi": "बीजगणित में हम किसी अनजान संख्या की जगह एक अक्षर लिखते हैं, जैसे x। यह एक डिब्बे जैसा है जिसमें कोई संख्या छिपी है। अगर x = 3 है, तो x + 2 = 5। और 2x का मतलब है 2 × x।",
+   "explain_en": "In algebra a letter like x stands for an unknown number, like a box with a number hidden inside. If x = 3, x + 2 = 5; 2x means 2 × x.",
+   "checks": [
+    {
+     "q_hi": "अगर x = 4 है, तो x + 3 कितना होगा?",
+     "q_en": "If x = 4, what is x + 3?",
+     "answer": "7",
+     "type": "number",
+     "hint_hi": "x की जगह 4 रखिए: 4 + 3।",
+     "focus": "addition"
+    },
+    {
+     "q_hi": "अगर y = 5 है, तो 2y कितना होगा?",
+     "q_en": "If y = 5, what is 2y?",
+     "answer": "10",
+     "type": "number",
+     "hint_hi": "2y का मतलब है 2 × y, यानी 2 × 5।",
+     "focus": "multiplication"
+    }
+   ]
+  },
+  {
+   "id": "expressions_operations",
+   "level": 4,
+   "name_en": "Expressions and operations",
+   "name_hi": "बीजीय व्यंजक और संक्रियाएँ",
+   "prerequisites": [
+    "variables",
+    "addition",
+    "subtraction",
+    "multiplication",
+    "division",
+    "integers",
+    "order_of_operations"
+   ],
+   "keywords": [
+    "व्यंजक",
+    "बीजीय व्यंजक",
+    "पद",
+    "समान पद",
+    "expression",
+    "expressions",
+    "like terms",
+    "terms"
+   ],
+   "patterns": [
+    "\\d*[a-z]\\s*[+\\-]\\s*\\d*[a-z](?![^=]*=)"
+   ],
+   "explain_hi": "व्यंजक में संख्याएँ, अक्षर और क्रियाएँ होती हैं, जैसे 3x + 2। एक जैसे अक्षर वाले पद जोड़ सकते हैं: 2x + 3x = 5x, ठीक वैसे ही जैसे 2 आम + 3 आम = 5 आम।",
+   "explain_en": "An expression mixes numbers, letters and operations, like 3x + 2. Like terms combine: 2x + 3x = 5x, just as 2 mangoes + 3 mangoes = 5 mangoes.",
+   "checks": [
+    {
+     "q_hi": "2x + 4x कितना होता है?",
+     "q_en": "What is 2x + 4x?",
+     "answer": "6x",
+     "type": "expression",
+     "hint_hi": "2 आम और 4 आम मिलाकर कितने आम? यहाँ आम की जगह x है।",
+     "focus": "addition"
+    },
+    {
+     "q_hi": "5y − 2y कितना होता है?",
+     "q_en": "What is 5y − 2y?",
+     "answer": "3y",
+     "type": "expression",
+     "hint_hi": "5 चीज़ों में से 2 हटाइए। चीज़ का नाम y है।",
+     "focus": "subtraction"
+    }
+   ]
+  },
+  {
+   "id": "linear_equations",
+   "level": 5,
+   "name_en": "Linear equations",
+   "name_hi": "रैखिक समीकरण",
+   "prerequisites": [
+    "expressions_operations",
+    "subtraction",
+    "division",
+    "integers"
+   ],
+   "keywords": [
+    "समीकरण",
+    "रैखिक समीकरण",
+    "equation",
+    "equations",
+    "x का मान",
+    "value of x",
+    "हल कीजिए",
+    "solve for"
+   ],
+   "patterns": [
+    "[a-z][^=]*=",
+    "=[^=]*[a-z]"
+   ],
+   "explain_hi": "समीकरण एक तराज़ू की तरह है, दोनों तरफ़ बराबर रहना चाहिए। अगर x + 3 = 7 है, तो दोनों तरफ़ से 3 घटाइए: x = 4। अगर 2x = 8 है, तो दोनों तरफ़ 2 से भाग दीजिए: x = 4।",
+   "explain_en": "An equation is like a balance: both sides stay equal. x + 3 = 7 → subtract 3 from both sides → x = 4.",
+   "checks": [
+    {
+     "q_hi": "अगर x + 5 = 9 है, तो x कितना है?",
+     "q_en": "If x + 5 = 9, what is x?",
+     "answer": "4",
+     "type": "number",
+     "hint_hi": "कौन-सी संख्या है जिसमें 5 जोड़ें तो 9 हो जाए?",
+     "focus": "subtraction"
+    },
+    {
+     "q_hi": "अगर 2x = 10 है, तो x कितना है?",
+     "q_en": "If 2x = 10, what is x?",
+     "answer": "5",
+     "type": "number",
+     "hint_hi": "2 को किससे गुणा करें कि 10 बने?",
+     "focus": "division"
+    }
+   ]
+  },
+  {
+   "id": "algebra",
+   "level": 6,
+   "name_en": "Algebra",
+   "name_hi": "बीजगणित",
+   "prerequisites": [
+    "expressions_operations",
+    "linear_equations"
+   ],
+   "keywords": [
+    "बीजगणित",
+    "बीज गणित",
+    "algebra",
+    "algebraic"
+   ],
+   "explain_hi": "बीजगणित में हम अक्षरों और संख्याओं के साथ नियम लगाकर अनजान संख्या ढूँढते हैं। पहले एक जैसे पदों को मिलाते हैं, फिर तराज़ू की तरह दोनों तरफ़ एक-सा काम करते हैं।",
+   "explain_en": "Algebra uses letters and numbers to find unknowns: combine like terms, then keep both sides balanced.",
+   "checks": [
+    {
+     "q_hi": "अगर x + 2x + 1 = 10 है, तो x कितना है?",
+     "q_en": "If x + 2x + 1 = 10, what is x?",
+     "answer": "3",
+     "type": "number",
+     "hint_hi": "पहले x + 2x को मिलाइए, फिर दोनों तरफ़ से 1 घटाइए।",
+     "focus": "expressions_operations"
+    },
+    {
+     "q_hi": "अगर 3x − 2 = 7 है, तो x कितना है?",
+     "q_en": "If 3x − 2 = 7, what is x?",
+     "answer": "3",
+     "type": "number",
+     "hint_hi": "दोनों तरफ़ 2 जोड़िए, फिर 3 से भाग दीजिए।",
+     "focus": "linear_equations"
+    }
+   ]
+  },
+  {
+   "id": "shapes",
+   "level": 1,
+   "name_en": "Shapes",
+   "name_hi": "आकृतियाँ",
+   "prerequisites": [
+    "numbers"
+   ],
+   "keywords": [
+    "आकृति",
+    "आकृतियाँ",
+    "त्रिभुज",
+    "आयत",
+    "वृत्त",
+    "चतुर्भुज",
+    "भुजा",
+    "भुजाएँ",
+    "कोना",
+    "shape",
+    "shapes",
+    "triangle",
+    "rectangle",
+    "circle",
+    "side"
+   ],
+   "explain_hi": "आकृतियाँ जैसे त्रिभुज, वर्ग, आयत और वृत्त। त्रिभुज की 3 भुजाएँ होती हैं। वर्ग की 4 बराबर भुजाएँ होती हैं। आयत की आमने-सामने की भुजाएँ बराबर होती हैं।",
+   "explain_en": "Shapes like triangle, square, rectangle, circle. A triangle has 3 sides; a square has 4 equal sides.",
+   "checks": [
+    {
+     "q_hi": "त्रिभुज की कितनी भुजाएँ होती हैं?",
+     "q_en": "How many sides does a triangle have?",
+     "answer": "3",
+     "type": "number",
+     "hint_hi": "‘त्रि’ का मतलब होता है तीन।",
+     "focus": "numbers"
+    },
+    {
+     "q_hi": "आयत के कितने कोने होते हैं?",
+     "q_en": "How many corners does a rectangle have?",
+     "answer": "4",
+     "type": "number",
+     "hint_hi": "अपनी कॉपी का पन्ना देखिए। वह आयत जैसा है। उसके कोने गिनिए।",
+     "focus": "numbers"
+    }
+   ]
+  },
+  {
+   "id": "perimeter",
+   "level": 2,
+   "name_en": "Perimeter",
+   "name_hi": "परिमाप",
+   "prerequisites": [
+    "addition",
+    "shapes",
+    "multiplication"
+   ],
+   "keywords": [
+    "परिमाप",
+    "परिमिति",
+    "चारों ओर",
+    "किनारे की लंबाई",
+    "perimeter",
+    "boundary"
+   ],
+   "explain_hi": "परिमाप किसी आकृति के चारों ओर की कुल लंबाई है। 3 सेमी भुजा वाले वर्ग का परिमाप है 3 + 3 + 3 + 3 = 12 सेमी।",
+   "explain_en": "Perimeter is the total length around a shape. A square of side 3 cm has perimeter 12 cm.",
+   "checks": [
+    {
+     "q_hi": "5 सेमी भुजा वाले वर्ग का परिमाप कितना है?",
+     "q_en": "What is the perimeter of a square with side 5 cm?",
+     "answer": "20",
+     "type": "number",
+     "hint_hi": "वर्ग की 4 भुजाएँ होती हैं, हर भुजा 5 सेमी।",
+     "focus": "addition"
+    },
+    {
+     "q_hi": "लंबाई 4 सेमी और चौड़ाई 2 सेमी वाले आयत का परिमाप कितना है?",
+     "q_en": "Perimeter of a rectangle 4 cm by 2 cm?",
+     "answer": "12",
+     "type": "number",
+     "hint_hi": "चारों भुजाएँ जोड़िए: 4 + 2 + 4 + 2।",
+     "focus": "addition"
+    }
+   ]
+  },
+  {
+   "id": "area",
+   "level": 3,
+   "name_en": "Area",
+   "name_hi": "क्षेत्रफल",
+   "prerequisites": [
+    "multiplication",
+    "shapes"
+   ],
+   "keywords": [
+    "क्षेत्रफल",
+    "area",
+    "वर्ग सेमी",
+    "square cm",
+    "जगह घेरती"
+   ],
+   "explain_hi": "क्षेत्रफल बताता है कि कोई आकृति कितनी जगह घेरती है। आयत का क्षेत्रफल = लंबाई × चौड़ाई। लंबाई 4 और चौड़ाई 3 हो, तो क्षेत्रफल 12 वर्ग सेमी है।",
+   "explain_en": "Area is how much space a shape covers. Rectangle area = length × width; 4 by 3 gives 12 square cm.",
+   "checks": [
+    {
+     "q_hi": "लंबाई 5 सेमी और चौड़ाई 2 सेमी वाले आयत का क्षेत्रफल कितना है?",
+     "q_en": "Area of a rectangle 5 cm by 2 cm?",
+     "answer": "10",
+     "type": "number",
+     "hint_hi": "लंबाई × चौड़ाई, यानी 5 × 2।",
+     "focus": "multiplication"
+    },
+    {
+     "q_hi": "3 सेमी भुजा वाले वर्ग का क्षेत्रफल कितना है?",
+     "q_en": "Area of a square with side 3 cm?",
+     "answer": "9",
+     "type": "number",
+     "hint_hi": "भुजा × भुजा, यानी 3 × 3।",
+     "focus": "multiplication"
+    }
+   ]
+  }
+ ]
+}

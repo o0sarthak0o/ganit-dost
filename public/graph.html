@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>टॉपिक का नक्शा — Ganit Dost knowledge graph</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { height: auto; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { font-size: 24px; margin: 0 0 4px; }
+    p { color: var(--muted); margin: 0 0 16px; font-size: 16px; }
+    .board { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; }
+    svg text { font-family: var(--font); }
+    .node rect { fill: #fff; stroke: var(--line); stroke-width: 1.5; }
+    .node:hover rect, .node.on rect { fill: var(--teal); stroke: var(--teal); }
+    .node:hover text, .node.on text { fill: #fff; }
+    .node.pre rect { fill: var(--sun-soft); stroke: var(--sun); }
+    .node.dep rect { fill: var(--teal-soft); stroke: var(--teal); }
+    .edge { stroke: #e2cfae; stroke-width: 1.5; fill: none; }
+    .edge.hot { stroke: var(--teal); stroke-width: 2.5; }
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); margin-top: 10px; }
+    .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="/" class="fine">← वापस</a>
+    <h1>टॉपिक का नक्शा (Knowledge graph)</h1>
+    <p>नीचे वाले टॉपिक ऊपर वालों की नींव हैं। किसी टॉपिक पर उँगली रखिए या क्लिक कीजिए, उसकी नींव (पीली) और उस पर बनने वाले टॉपिक (हरे) दिखेंगे।</p>
+    <div class="board"><svg id="g"></svg></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--teal)"></i>चुना हुआ टॉपिक</span>
+      <span><i class="sw" style="background:var(--sun-soft);border:1px solid var(--sun)"></i>इससे पहले आना चाहिए (prerequisite)</span>
+      <span><i class="sw" style="background:var(--teal-soft);border:1px solid var(--teal)"></i>इस पर बनता है</span>
+    </div>
+  </div>
+  <script type="module">
+    const { nodes } = await (await fetch('/api/graph')).json();
+    const svg = document.getElementById('g');
+    const NS = 'http://www.w3.org/2000/svg';
+    const W = 170, H = 44, GX = 26, GY = 70, PAD = 24;
+    const levels = [...new Set(nodes.map(n => n.level))].sort((a, b) => b - a); // top = most advanced
+    const rows = levels.map(l => nodes.filter(n => n.level === l));
+    const maxCols = Math.max(...rows.map(r => r.length));
+    const width = PAD * 2 + maxCols * W + (maxCols - 1) * GX;
+    const height = PAD * 2 + rows.length * H + (rows.length - 1) * GY;
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('width', width); svg.setAttribute('height', height);
+
+    const pos = {};
+    rows.forEach((row, r) => {
+      const rowW = row.length * W + (row.length - 1) * GX;
+      const x0 = (width - rowW) / 2;
+      row.forEach((n, i) => { pos[n.id] = { x: x0 + i * (W + GX), y: PAD + r * (H + GY) }; });
+    });
+
+    const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.append(e); return e; };
+    const edges = [];
+    const gEdges = el('g', {}, svg);
+    for (const n of nodes) for (const p of n.prerequisites) {
+      const a = pos[n.id], b = pos[p];
+      const x1 = a.x + W / 2, y1 = a.y + H, x2 = b.x + W / 2, y2 = b.y;
+      const path = el('path', { class: 'edge', d: `M${x1},${y1} C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}` }, gEdges);
+      edges.push({ from: n.id, to: p, path });
+    }
+    const boxes = {};
+    for (const n of nodes) {
+      const g = el('g', { class: 'node', transform: `translate(${pos[n.id].x},${pos[n.id].y})`, tabindex: 0 }, svg);
+      el('rect', { width: W, height: H, rx: 12 }, g);
+      const t1 = el('text', { x: W / 2, y: 19, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700 }, g); t1.textContent = n.name_hi.length > 18 ? n.name_hi.slice(0, 17) + '…' : n.name_hi;
+      const t2 = el('text', { x: W / 2, y: 35, 'text-anchor': 'middle', 'font-size': 11, fill: '#7a6a5a' }, g); t2.textContent = n.name_en;
+      const title = el('title', {}, g); title.textContent = `${n.name_hi} — ${n.name_en}`;
+      boxes[n.id] = g;
+      const on = () => highlight(n.id);
+      g.addEventListener('mouseenter', on); g.addEventListener('focus', on); g.addEventListener('click', on);
+    }
+    const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+    function collect(id, dir, out = new Set()) {
+      const next = dir === 'down' ? byId[id].prerequisites : nodes.filter(n => n.prerequisites.includes(id)).map(n => n.id);
+      for (const x of next) if (!out.has(x)) { out.add(x); collect(x, dir, out); }
+      return out;
+    }
+    function highlight(id) {
+      const pre = collect(id, 'down'), dep = collect(id, 'up');
+      for (const [k, g] of Object.entries(boxes)) g.setAttribute('class', 'node' + (k === id ? ' on' : pre.has(k) ? ' pre' : dep.has(k) ? ' dep' : ''));
+      for (const e of edges) e.path.setAttribute('class', 'edge' + ((e.from === id || pre.has(e.from)) && (pre.has(e.to)) || (dep.has(e.from) || e.from === id) && (dep.has(e.to) || e.to === id) ? ' hot' : ''));
+    }
+    highlight('algebra');
+  </script>
+</body>
+</html>
