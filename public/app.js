@@ -13,7 +13,7 @@ const els = {
   teacherToggle: $('teacherToggle'), endLine: $('endLine'), masteredBox: $('masteredBox'), masteredList: $('masteredList'),
 };
 
-let sessionId = null;
+let state = null; // the conversation; the server is stateless, so it travels with every request
 let busy = false;
 let voiceMode = 'browser';
 
@@ -178,12 +178,21 @@ const recorder = (() => {
 const canListen = () => (voiceMode === 'sarvam' ? recorder.supported : voice.canListen);
 
 // ---------------- API ----------------
+/** Recording -> base64 (without the "data:...;base64," prefix). */
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(',')[1] || '');
+    r.onerror = reject;
+    r.readAsDataURL(blob);
+  });
+}
+
 async function api(path, body) {
-  const isAudio = body instanceof Blob;
   const res = await fetch(path, {
     method: 'POST',
-    headers: { 'content-type': isAudio ? (body.type || 'audio/webm') : 'application/json' },
-    body: isAudio ? body : JSON.stringify(body || {}),
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body || {}),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw Object.assign(new Error(data.error || 'request_failed'), { status: res.status });
@@ -280,7 +289,7 @@ async function startChat() {
   els.startBtn.disabled = true;
   try {
     const data = await api('/api/session');
-    sessionId = data.sessionId;
+    state = data.state;
     voiceMode = data.voice === 'sarvam' ? 'sarvam' : 'browser';
     els.messages.innerHTML = '';
     renderLadder([]);
@@ -296,6 +305,7 @@ async function startChat() {
 }
 
 function showReply(data) {
+  state = data.state;
   addMessage('tutor', data.reply_hi, data);
   renderLadder(data.ladder);
   speak(data.reply_hi);
@@ -303,13 +313,13 @@ function showReply(data) {
 
 async function send(text) {
   text = text.trim();
-  if (!text || busy || !sessionId) return;
+  if (!text || busy || !state) return;
   addMessage('student', text);
   setBusy(true);
   setStatus('🤔 सोच रहा हूँ…');
   const typing = addTyping();
   try {
-    const data = await api(`/api/session/${sessionId}/message`, { text });
+    const data = await api('/api/message', { text, state });
     typing.remove();
     showReply(data);
   } catch (err) {
@@ -322,12 +332,12 @@ async function send(text) {
 
 /** Sarvam mode: send the recording; the server returns what it heard plus the reply. */
 async function sendAudio(blob) {
-  if (busy || !sessionId) return;
+  if (busy || !state) return;
   setBusy(true);
   setStatus('👂 सुनकर समझ रहा हूँ…');
   const typing = addTyping();
   try {
-    const data = await api(`/api/session/${sessionId}/audio`, blob);
+    const data = await api('/api/audio', { audio: await blobToBase64(blob), mime: blob.type, state });
     typing.remove();
     if (!data.heard) { setStatus('कुछ सुनाई नहीं दिया। फिर से दबाकर बोलिए।'); return; }
     typing.before(addMessage('student', data.transcript));
@@ -341,9 +351,9 @@ async function sendAudio(blob) {
 }
 
 function showError(err) {
-  if (err.status === 404) {
+  if (err.message === 'bad_state') {
     addMessage('tutor', 'यह बातचीत पुरानी हो गई। चलिए नई बातचीत शुरू करते हैं।');
-    sessionId = null;
+    state = null;
     setTimeout(() => show(els.startView), 2500);
   } else if (err.status === 429) {
     addMessage('tutor', 'थोड़ा रुकिए, एक मिनट बाद फिर बात करते हैं।');
@@ -356,10 +366,10 @@ function showError(err) {
 async function endChat() {
   voice.stopSpeaking();
   voice.stopListening();
-  const id = sessionId;
-  sessionId = null;
+  const last = state;
+  state = null;
   let data = null;
-  try { data = id ? await api(`/api/session/${id}/end`) : null; } catch { /* session may have expired */ }
+  try { data = last ? await api('/api/end', { state: last }) : null; } catch { /* show the default goodbye */ }
   els.endLine.textContent = data?.reply_hi || 'जब भी कोई सवाल हो, फिर आइए। नमस्ते!';
   const mastered = data?.summary?.mastered || [];
   els.masteredList.innerHTML = '';

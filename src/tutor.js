@@ -25,6 +25,7 @@ const MATH_GENERIC = [
 const STUCK_AGAIN = ['फिर अटक', 'फिर से अटक', 'अभी भी', 'नहीं हुआ', 'नहीं बना', 'still stuck', 'again'];
 
 const has = (s, list) => list.some((w) => s.includes(w));
+const HISTORY_KEEP = 20; // turns of conversation kept in the session (the AI sees the last 14)
 
 export class Tutor {
   /** @param {import('./knowledgeGraph.js').KnowledgeGraph} graph @param {{brain?:{name:string,tutorTurn:Function}}} opts */
@@ -33,17 +34,16 @@ export class Tutor {
     this.brain = brain;
   }
 
+  /** A new conversation. Plain JSON: the browser holds it and sends it back each turn. */
   newSession() {
     return {
       id: randomUUID(),
-      createdAt: Date.now(),
-      lastActive: Date.now(),
       phase: 'identify',
       problemText: '',
       targetId: null,
       currentId: null,
       stack: [],            // topics above current, starting at the target
-      mastered: new Set(),
+      mastered: [],         // topic ids the child got right
       checkIdx: {},         // topic id -> index of the check question last asked
       currentCheck: null,   // { nodeId, idx }
       zeroStreak: 0,
@@ -56,9 +56,45 @@ export class Tutor {
 
   greeting() { return { reply_hi: GREETING_HI, reply_en: GREETING_EN }; }
 
+  /** Rebuild a session from state the browser sent back. Unknown topics or bad shapes -> 400. */
+  restore(raw) {
+    const bad = () => { throw Object.assign(new Error('bad_state'), { status: 400 }); };
+    if (!raw || typeof raw !== 'object') bad();
+    const topic = (id) => (id === null || id === undefined ? null : this.graph.has(id) ? id : bad());
+    const topics = (a) => (Array.isArray(a) ? a.slice(0, 40).map(topic).filter(Boolean) : bad());
+    const int = (n, max) => (Number.isInteger(n) && n >= 0 ? Math.min(n, max) : 0);
+    const str = (t, max) => String(t ?? '').slice(0, max);
+
+    const s = this.newSession();
+    if (typeof raw.id === 'string') s.id = str(raw.id, 64);
+    if (!['identify', 'locate', 'probe'].includes(raw.phase)) bad();
+    s.phase = raw.phase;
+    s.problemText = str(raw.problemText, 500);
+    s.targetId = topic(raw.targetId);
+    s.currentId = topic(raw.currentId);
+    s.lastTargetId = topic(raw.lastTargetId);
+    s.stack = topics(raw.stack ?? []);
+    s.mastered = [...new Set(topics(raw.mastered ?? []))];
+    for (const [id, idx] of Object.entries(raw.checkIdx && typeof raw.checkIdx === 'object' ? raw.checkIdx : {})) {
+      if (this.graph.has(id)) s.checkIdx[id] = int(idx, this.graph.get(id).checks.length - 1);
+    }
+    const cc = raw.currentCheck;
+    s.currentCheck = cc && this.graph.has(cc.nodeId)
+      ? { nodeId: cc.nodeId, idx: int(cc.idx, this.graph.get(cc.nodeId).checks.length - 1) } : null;
+    s.zeroStreak = int(raw.zeroStreak, 10);
+    s.turn = int(raw.turn, 10_000);
+    s.history = (Array.isArray(raw.history) ? raw.history : [])
+      .filter((h) => h && (h.role === 'tutor' || h.role === 'student'))
+      .slice(-HISTORY_KEEP).map((h) => ({ role: h.role, text: str(h.text, 600) }));
+    s.gradeLog = (Array.isArray(raw.gradeLog) ? raw.gradeLog : []).slice(-50).map((g) => ({
+      turn: int(g?.turn, 10_000), topic: topic(g?.topic), grade: [-1, 0, 1].includes(g?.grade) ? g.grade : 0, reason: str(g?.reason, 40),
+    }));
+    if (s.phase !== 'identify' && (!s.targetId || !s.currentId)) bad();
+    return s;
+  }
+
   async handle(session, rawText) {
     const text = String(rawText || '').trim().slice(0, 500);
-    session.lastActive = Date.now();
     session.turn += 1;
     session.history.push({ role: 'student', text });
 
@@ -72,6 +108,7 @@ export class Tutor {
     if (!out) { out = this.rulesTurn(session, text); out.engine = 'rules'; }
 
     session.history.push({ role: 'tutor', text: out.reply_hi });
+    session.history = session.history.slice(-HISTORY_KEEP);
     if (out.grade !== null && out.grade !== undefined) {
       session.gradeLog.push({ turn: session.turn, topic: out.gradedTopic, grade: out.grade, reason: out.reason });
     }
@@ -81,7 +118,7 @@ export class Tutor {
   summary(session) {
     return {
       turns: session.turn,
-      mastered: [...session.mastered].map((id) => this.graph.get(id).name_hi),
+      mastered: session.mastered.map((id) => this.graph.get(id).name_hi),
       gradeLog: session.gradeLog,
     };
   }
@@ -95,7 +132,7 @@ export class Tutor {
       target: node(s.targetId),
       current: node(s.currentId),
       ladder: s.currentId ? [...s.stack, s.currentId].map(node) : [],
-      mastered: [...s.mastered].map(node),
+      mastered: s.mastered.map(node),
     };
   }
 
@@ -113,7 +150,7 @@ export class Tutor {
 
   /** Unmastered prerequisites of a topic; `prefer` (a check's focus) goes first. */
   downOptions(id, s, prefer) {
-    const opts = this.graph.prerequisites(id).filter((p) => !s.mastered.has(p));
+    const opts = this.graph.prerequisites(id).filter((p) => !s.mastered.includes(p));
     if (prefer && opts.includes(prefer)) return [prefer, ...opts.filter((p) => p !== prefer)];
     return opts;
   }
@@ -123,7 +160,7 @@ export class Tutor {
     const from = s.currentId;
     if (grade === 1) {
       s.zeroStreak = 0;
-      s.mastered.add(from);
+      if (!s.mastered.includes(from)) s.mastered.push(from);
       if (s.stack.length) { s.currentId = s.stack.pop(); return { move: 'up', from, to: s.currentId }; }
       s.lastTargetId = s.targetId;
       s.phase = 'identify'; s.currentId = null; s.targetId = null; s.currentCheck = null;
@@ -228,7 +265,7 @@ export class Tutor {
       target_topic: s.targetId ? brief(s.targetId) : null,
       current_topic: s.currentId ? brief(s.currentId) : null,
       ladder_from_target_to_current: s.currentId ? [...s.stack, s.currentId] : [],
-      mastered_topics: [...s.mastered],
+      mastered_topics: s.mastered,
     };
     if (s.phase === 'identify') ctx.all_topics = g.summary();
     if (s.phase === 'locate') ctx.subtopics_of_target = [s.targetId, ...g.descendants(s.targetId)].map((id) => ({ id, name_en: g.get(id).name_en }));

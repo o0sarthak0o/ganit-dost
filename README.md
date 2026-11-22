@@ -90,14 +90,20 @@ Change the voice with `SARVAM_TTS_MODEL` and `SARVAM_SPEAKER` in `.env`.
 
 ## API
 
+The server keeps nothing between requests. The browser holds the conversation `state` (about 1 KB of JSON) and sends it back with every turn; the server checks it (`Tutor.restore`) and returns the updated one. This is what lets it run on Vercel, where each request can reach a different instance.
+
 | Method | Path | Body | Returns |
 |---|---|---|---|
-| POST | `/api/session` | none | `sessionId`, greeting, `engine`, `voice` (`sarvam` or `browser`) |
-| POST | `/api/session/:id/message` | `{ "text": "..." }` | `reply_hi`, `reply_en`, `grade`, `move`, `ladder`, `mastered`, `phase` |
-| POST | `/api/session/:id/audio` | recorded audio (Sarvam only) | `transcript`, `heard`, plus everything `/message` returns |
+| POST | `/api/session` | none | greeting, `engine`, `voice` (`sarvam` or `browser`), `state` |
+| POST | `/api/message` | `{ "text": "...", "state": {...} }` | `reply_hi`, `reply_en`, `grade`, `move`, `ladder`, `mastered`, `phase`, new `state` |
+| POST | `/api/audio` | `{ "audio": "<base64>", "mime": "audio/webm", "state": {...} }` (Sarvam only) | `transcript`, `heard`, plus everything `/api/message` returns |
 | POST | `/api/tts` | `{ "text": "one sentence" }` (Sarvam only) | `audio` (base64 MP3) |
-| POST | `/api/session/:id/end` | none | `reply_hi`, `summary` |
+| POST | `/api/end` | `{ "state": {...} }` | `reply_hi`, `summary` |
 | GET | `/api/graph` | none | all topics |
 | GET | `/api/health` | none | which tutor is active |
 
 Sessions live in memory and are forgotten after 1 hour idle. There is a light per-IP rate limit: 60 messages per 5 minutes.
+
+## Deploying to Vercel
+
+`vercel.json` serves `public/` as static pages and routes every `/api/*` request to one function, `api/index.js`, which uses the same code as the local server (`src/app.js`). Set `SARVAM_API_KEY` in the Vercel project's Environment Variables, then redeploy. The per-IP rate limits are kept in memory, so on Vercel each instance counts on its own. Treat them as a soft limit, and use Vercel's Firewall if the public URL gets abused.
